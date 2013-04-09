@@ -23,10 +23,21 @@ README](doc/README-original.md) for related details.
 1. Setup the PostgreSQL database and populate with sample data:
    ```
    sudo -u postgres createuser "$USER" -d
-   rake db:setup populate
+   bundle exec rake db:setup populate
    ```
 
 1. Start the Rails server (at `http://localhost:3000`):
    ```
-   rails s
+   bundle exec rails s
+   ```
+
+## Running tests
+
+1. Install [PhantomJS](http://phantomjs.org/). It's not packaged on SUSE, so
+   download the official tarball, untar it, and move the `phantomjs` binary to
+   `~/bin/` (which should already be in your `$PATH`).
+
+1. Now simply run `rake` to execute both the Ruby and Javscript tests:
+   ```
+   bundle exec rake
    ```
