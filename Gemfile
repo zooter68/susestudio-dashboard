@@ -15,7 +15,7 @@ gem "foreman"
 gem "faraday", "~> 0.8.4"
 gem "faraday_middleware", "~> 0.8.8"
 gem "multi_xml", "~> 0.5.1"
-gem "libxml-ruby", "~> 2.3.3"
+gem "libxml-ruby"
 gem "nokogiri", "~> 1.5.5"
 
 group :test, :development do
