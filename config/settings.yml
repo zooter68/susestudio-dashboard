@@ -1,0 +1,11 @@
+# Default application settings, which can be overridden locally and in each
+# Rails environment (eg. development, test, production).
+#
+# See # https://github.com/railsjedi/rails_config for details.
+
+# The following Chef server authentication values are examples, and must be
+# overridden with real values for Chef integration to work.
+chef:
+  server_url:  'https://api.opscode.com'
+  client_name: 'johndoe'
+  client_key:  '/home/johndoe/chef-keys/johndoe.pem'

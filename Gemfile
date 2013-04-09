@@ -20,6 +20,9 @@ gem 'multi_xml', '~> 0.5.1'
 gem 'libxml-ruby'
 gem 'nokogiri', '~> 1.5.5'
 
+# Chef API client library
+gem 'ridley'
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'jasmine'
