@@ -13,16 +13,16 @@ README](doc/README-original.md) for related details.
    ```
    git clone git@github.com:susestudio/dashboard.git
    ```
-   
+
 1. Install dependencies with bundler:
    ```
    cd dashboard
    bundle install
    ```
 
-1. Setup database and populate with sample data:
+1. Setup the PostgreSQL database and populate with sample data:
    ```
-   cp config/database.example.yml config/database.yml
+   sudo -u postgres createuser "$USER" -d
    rake db:setup populate
    ```
 

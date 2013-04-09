@@ -8,7 +8,7 @@ gem "less-rails-bootstrap", "~> 2.3.0"
 
 gem 'angular-rails'
 
-gem "mysql2", "~> 0.3.11"
+gem "pg"
 
 gem "unicorn"
 gem "foreman"
