@@ -136,6 +136,8 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
+    rails_config (0.3.2)
+      activesupport (>= 3.0)
     railties (3.2.13)
       actionpack (= 3.2.13)
       activesupport (= 3.2.13)
@@ -218,6 +220,7 @@ DEPENDENCIES
   nokogiri (~> 1.5.5)
   pg
   rails (= 3.2.13)
+  rails_config
   rb-fsevent (~> 0.9.1)
   rspec-rails
   sass-rails (~> 3.2.5)
