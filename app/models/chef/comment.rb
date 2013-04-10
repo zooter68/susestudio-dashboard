@@ -6,7 +6,7 @@ module Chef
 
     attr_accessor :node_name, :body
 
-    validate :always_bad
+    validate :not_blank
 
     def initialize(attributes = {})
       unless attributes.nil?
@@ -21,14 +21,28 @@ module Chef
     end
 
     def save
-      # do the thing with Ridley
-      valid?
+      node = Chef.node.find("#{node_name}.cluster.xs")
+      last = node.normal_attributes.extra.try(:comments).try(:last)
+      if last
+        past = node.normal_attributes.extra.try(:comments).try(:past)
+        past ||= []
+        past.unshift(last)
+        node.set_chef_attribute('extra.comments.past', past)
+      end
+      node.set_chef_attribute('extra.comments.last', {
+        user_id:    'admin',
+        created_at: Time.now.iso8601,
+        content:    body
+      })
+      node.save
     end
 
     protected
 
-    def always_bad
-      self.errors.add :body, "One Error"
+    def not_blank
+      if body.blank?
+        errors.add :body, 'Please fill in the comment'
+      end
     end
   end
 end
