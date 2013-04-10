@@ -23,6 +23,7 @@ class CsvParser < Thor
   desc 'import CSV_FILE', 'Import CSV file exported from Google docs'
   method_option :show_ignored_hosts, aliases: :i, type: :boolean, desc: 'Only show ignored hosts'
   method_option :show_header,        aliases: :h, type: :boolean, desc: 'Only show table header'
+  method_option :chef_force,         aliases: :f, type: :boolean, desc: 'Force overwriting of the extra attributes in Chef', default: false
   method_option :chef_credentials,   aliases: :c, type: :string,  desc: 'YAML file with Chef credentials', required: true
   def import(csv_file)
 
@@ -70,12 +71,16 @@ class CsvParser < Thor
             fqdn = "#{hostname}.cluster.xs"
             node = @chef.node.find(fqdn)
             if node
-              printf("%18s - Adding attributes:\n", fqdn)
-              pp({ extra: data })
-              node.set_chef_attribute(:extra, data)
-              node.save
+              if node.normal_attributes.extra
+                printf("** %18s - Won't override existing extra attributes, skipping\n", fqdn)
+              else
+                printf("** %18s - Adding attributes:\n", fqdn)
+                pp({ extra: data })
+                node.set_chef_attribute(:extra, data)
+                node.save
+              end
             else
-              printf("%18s - Not in Chef, skipping\n", fqdn)
+              printf("** %18s - Not in Chef, skipping\n", fqdn)
             end
           else
             puts hostname
