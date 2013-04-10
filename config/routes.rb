@@ -1,5 +1,7 @@
 TeamDashboard::Application.routes.draw do
 
+  devise_for :users
+
   mount Jasminerice::Engine => '/jasmine' if Rails.env.test?
 
   namespace :api do
