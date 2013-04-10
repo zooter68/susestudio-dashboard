@@ -4,6 +4,9 @@ require 'thor'
 require 'csv'
 require 'time'
 require 'pp'
+require 'ridley'
+require 'yaml'
+
 
 class CsvParser < Thor
 
@@ -20,7 +23,18 @@ class CsvParser < Thor
   desc 'import CSV_FILE', 'Import CSV file exported from Google docs'
   method_option :show_ignored_hosts, aliases: :i, type: :boolean, desc: 'Only show ignored hosts'
   method_option :show_header,        aliases: :h, type: :boolean, desc: 'Only show table header'
+  method_option :chef_credentials,   aliases: :c, type: :string,  desc: 'YAML file with Chef credentials', required: true
   def import(csv_file)
+
+    if options.chef_credentials
+      config = YAML.load_file(options.chef_credentials)
+      @chef = Ridley.new(
+        server_url:  config['chef']['server_url'],
+        client_name: config['chef']['client_name'],
+        client_key:  config['chef']['client_key']
+      )
+    end
+
     row     = 0
     header  = []
     ignored = []
@@ -33,7 +47,6 @@ class CsvParser < Thor
         hostname = cols[01]
         if hostname =~ /^(node|admin|stor)/
           next if options.show_ignored_hosts?
-          puts hostname
           data = {}
           set_comments(cols[2], data)
           set_network(cols[ 5], data, :switch_port_1)
@@ -52,7 +65,22 @@ class CsvParser < Thor
           set_if_present(cols[26], data, :warranty_expires)
           set_if_present(cols[28], data, :date,  :purchase)
           set_if_present(cols[29], data, :price, :purchase)
-          pp({ extra: data })
+
+          if options.chef_credentials
+            fqdn = "#{hostname}.cluster.xs"
+            node = @chef.node.find(fqdn)
+            if node
+              printf("%18s - Adding attributes:\n", fqdn)
+              pp({ extra: data })
+              node.set_chef_attribute(:extra, data)
+              node.save
+            else
+              printf("%18s - Not in Chef, skipping\n", fqdn)
+            end
+          else
+            puts hostname
+            pp({ extra: data })
+          end
         elsif hostname
           ignored << hostname
         end
