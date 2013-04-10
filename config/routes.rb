@@ -9,6 +9,10 @@ TeamDashboard::Application.routes.draw do
 
     resources :datapoints_targets, :only => :index
     match "data_sources/:kind" => "data_sources#index"
+
+    namespace :chef do
+      resources :comments, :only => [:index, :create, :new]
+    end
   end
 
   match "dashboards"     => "layout#index"
