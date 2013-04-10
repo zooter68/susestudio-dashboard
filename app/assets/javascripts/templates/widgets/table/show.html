@@ -4,7 +4,7 @@
       <th ng-repeat="header in data.columns">{{header}}</th>
     </tr>
     <tr ng-repeat="row in data.rows">
-      <td ng-repeat="field in row">{{field}}</td>
+      <td ng-repeat="field in row" ng-bind-html-unsafe="field | js_link"></td>
     </tr>
   </table>
 </div>
