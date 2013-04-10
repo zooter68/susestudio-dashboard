@@ -1,0 +1,115 @@
+#!/usr/bin/ruby
+
+require 'thor'
+require 'csv'
+require 'time'
+require 'pp'
+
+class CsvParser < Thor
+
+  # Columns:
+  # col[00]: Location,      col[01]: Hostname,        col[02]: Comments, col[03]: Serial No.,
+  # col[04]: MAC eth0,      col[05]: Switch Port,     col[06]: MAC eth1, col[07]: Switch Port,
+  # col[08]: MAC eth2,      col[09]: Switch Port,     col[10]: MAC eth3, col[11]: Switch Port,
+  # col[12]: BMC MAC,       col[13]: Switch Port,     col[14]: BMC IP,   col[15]: Vendor,
+  # col[16]: Model,         col[17]: Stage,           col[18]: Role(s),  col[19]: RAM,
+  # col[20]: OS,            col[21]: Row,             col[22]: Cabinet,  col[23]: Position,
+  # col[24]: Unit height,   col[25]: Hot-swap drives, col[26]: Warranty, col[27]: Disks,
+  # col[28]: Purchase date, col[29]: Purchase price,  col[30]: Remote console (via iLO)
+
+  desc 'import CSV_FILE', 'Import CSV file exported from Google docs'
+  method_option :show_ignored_hosts, aliases: :i, type: :boolean, desc: 'Only show ignored hosts'
+  method_option :show_header,        aliases: :h, type: :boolean, desc: 'Only show table header'
+  def import(csv_file)
+    row     = 0
+    header  = []
+    ignored = []
+    CSV.foreach(csv_file) do |cols|
+      row += 1
+      if row < 3
+        cols.each_with_index { |value, i| header[i] = value if value }
+      else
+        break if options.show_header?
+        hostname = cols[01]
+        if hostname =~ /^(node|admin|stor)/
+          next if options.show_ignored_hosts?
+          puts hostname
+          data = {}
+          set_comments(cols[2], data)
+          set_network(cols[ 5], data, :switch_port_1)
+          set_network(cols[ 7], data, :switch_port_2)
+          set_network(cols[ 9], data, :switch_port_3)
+          set_network(cols[11], data, :switch_port_4)
+          set_network(cols[13], data, :switch_port_5)
+          set_network(cols[12], data, :bmc_mac)
+          set_network(cols[14], data, :bmc_ip)
+          set_if_present(cols[25], data, :hot_swap_drives, :features)
+          set_if_present(cols[30], data, :iLO,             :features)
+          set_if_present(cols[21], data, :row,         :location)
+          set_if_present(cols[22], data, :cabinet,     :location)
+          set_if_present(cols[23], data, :position,    :location)
+          set_if_present(cols[24], data, :unit_height, :location)
+          set_if_present(cols[26], data, :warranty_expires)
+          set_if_present(cols[28], data, :date,  :purchase)
+          set_if_present(cols[29], data, :price, :purchase)
+          pp({ extra: data })
+        elsif hostname
+          ignored << hostname
+        end
+      end
+    end
+
+    if options.show_ignored_hosts?
+      puts "Ignored hosts: #{ignored.join(', ')}"
+    end
+
+    if options.show_header?
+      header.each_with_index do |value, i|
+        printf("col[%02d]: %s\n", i, value)
+      end
+    end
+  end
+
+  private
+
+  def set_if_present(value, data, sym, parent = nil)
+    return unless value
+    if parent
+      data[parent] ||= {}
+      data[parent][sym] = value
+    else
+      data[sym] = value
+    end
+  end
+
+  def set_comments(value, data)
+    return unless value
+    data[:comments] = {
+      last: {
+        user_id:    'admin',
+        created_at: Time.now.iso8601,
+        content:    value
+      }
+    }
+  end
+
+  def set_network(value, data, sym)
+    return unless value
+    data[:network] ||= {}
+    case sym.to_s
+    when 'bmc_mac', 'bmc_ip'
+      data[:network][:bmc] ||= {}
+      data[:network][:bmc][sym.to_s[4..-1].to_sym] = value
+    when /switch_port_(\d)/
+      number = $1.to_i
+      data[:network][:eth] ||= {}
+      case number
+      when 1,2,3,4  # 1 => eth0, ...
+        data[:network][:eth][number-1] = { switch_port: value }
+      when 5  # BMC
+      end
+    end
+  end
+end
+
+CsvParser.start
