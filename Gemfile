@@ -11,6 +11,7 @@ gem 'less-rails-bootstrap', '~> 2.3.0'
 gem 'angular-rails'
 
 gem 'pg'
+gem 'devise'
 
 gem 'unicorn-rails'
 

@@ -53,6 +53,10 @@ module TeamDashboard
     # change minification options to fix Angular.js dependency injection
     config.assets.js_compressor = Sprockets::LazyCompressor.new { Uglifier.new(:mangle => false) }
 
+    # For Devise on Heroku, to force the application to not access the DB or
+    # load models when precompiling assets
+    config.assets.initialize_on_precompile = false
+
     config.graphite_url     = ENV['GRAPHITE_URL']
     config.ganglia_web_url  = ENV['GANGLIA_WEB_URL']
     config.ganglia_host     = ENV['GANGLIA_HOST']

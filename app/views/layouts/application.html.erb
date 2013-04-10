@@ -41,7 +41,10 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div id="flash"></div>
+        <div id="flash">
+          <p class="notice"><%= notice %></p>
+          <p class="alert"><%= alert %></p>
+        </div>
 
         <div ng-class="{ 'alert-show': !resolved }" class="alert alert-info" ng-cloak>
           <%= image_tag('spinner2.gif') %> &nbsp;Loading
