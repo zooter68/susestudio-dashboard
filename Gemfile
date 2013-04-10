@@ -12,7 +12,8 @@ gem 'angular-rails'
 
 gem 'pg'
 
-gem 'unicorn'
+gem 'unicorn-rails'
+
 gem 'foreman'
 gem 'faraday', '~> 0.8.4'
 gem 'faraday_middleware', '~> 0.8.8'
