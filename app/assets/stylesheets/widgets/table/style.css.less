@@ -3,37 +3,17 @@
  *= require dataTables/jquery.dataTables.bootstrap
 */
 
-@darkGrey:    #060606;
-@darkerGrey:  #222;
-
 table.dataTable {
   tr.odd {
-    background-color: @darkGrey;
-
-    td.sorting_1 {
-      background-color: @darkGrey;
-    }
-
-    td.sorting_2 {
-      background-color: @darkGrey;
-    }
-    td.sorting_3 {
-      background-color: @darkGrey;
+    background-color: #060606;
+    td.sorting_1, td.sorting_2, td.sorting_3 {
+      background-color: inherit;
     }
   }
-
   tr.even {
-    background-color: @darkerGrey;
-
-    td.sorting_1 {
-      background-color: @darkerGrey;
-    }
-
-    td.sorting_2 {
-      background-color: @darkerGrey;
-    }
-    td.sorting_3 {
-      background-color: @darkerGrey;
+    background-color: #0F0F0F;
+    td.sorting_1, td.sorting_2, td.sorting_3 {
+      background-color: inherit;
     }
   }
 }
