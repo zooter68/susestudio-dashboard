@@ -41,11 +41,12 @@ module Sources
         comments = node.normal_attributes.extra.try(:comments)
         last = comments.try(:last)
         if last
-          out << "\"#{last.content}\" by #{last.user_id} #{time_ago_in_words(last.created_at)} ago"
+          out = "\"#{last.content}\" by #{last.user_id} #{time_ago_in_words(last.created_at)} ago"
         end
-        # FIXME a little hacky
-        url = Rails.application.routes.url_helpers.new_api_chef_comment_path(:chef_comment => {:node_name => host(node)}, :format => :js)
-        out << " [add](#{url})"
+        url = Rails.application.routes.url_helpers.new_api_chef_comment_path(
+          chef_comment: { node_name: host(node) }, format: :js
+        )
+        out << "[<img class='comment' src='/assets/comment-new-icon.png'>](#{url})"
       end
 
       def uptime(node)
