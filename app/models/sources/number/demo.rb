@@ -3,7 +3,7 @@ module Sources
     class Demo < Sources::Number::Base
 
       def get(options = {})
-        { :value => rand(100*2) - 100 }
+        { :value => rand(99) }
       end
 
     end

@@ -126,7 +126,31 @@ d4.widgets.create!(
   :size_x => 2
 )
 
-d5 = Dashboard.create!(:name => 'Chef managed servers')
+d5 = Dashboard.create!(:name => 'Operations view')
+d5.widgets.create!(
+  :name     => 'UI Server',
+  :kind     => 'number',
+  :source   => 'demo',
+  :settings => { :label => 'Reqs per min' }
+)
+d5.widgets.create!(
+  :name     => 'PostgreSQL',
+  :kind     => 'number',
+  :source   => 'demo',
+  :col      => 1,
+  :row      => 2,
+  :settings => { :label => 'Reqs per min' }
+)
+d5.widgets.create!(
+  :name     => 'Cluster load',
+  :targets  => [target1, target2].join(';'),
+  :size_x   => 2,
+  :size_y   => 2,
+  :col      => 2,
+  :row      => 1,
+  :source   => 'demo',
+  :settings => { :graph_type => 'area' }
+)
 d5.widgets.create!(
   :name     => 'Production',
   :kind     => 'table',
