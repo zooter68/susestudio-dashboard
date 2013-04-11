@@ -14,6 +14,11 @@
     </select>
   </div>
 
+  <div td-field label="Vertical size">
+    <select name="size_y" ng-model="widget.size_y" ng-options="i.value as i.label for i in vertSizes" required>
+    </select>
+  </div>
+
   <div td-field label="Source">
     <select name="source" ng-model="widget.source" ng-options="i.value as i.label for i in sources" required>
     </select>

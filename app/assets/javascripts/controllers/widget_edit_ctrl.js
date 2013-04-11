@@ -24,6 +24,7 @@ app.controller("WidgetEditCtrl", ["$scope", "$compile", "dialog", "$dialog", "Wi
   $scope.updateIntervals      = EditorFormOptions.updateIntervals;
   $scope.periods              = EditorFormOptions.periods;
   $scope.sizes                = EditorFormOptions.sizes;
+  $scope.vertSizes            = EditorFormOptions.vertSizes;
   $scope.sources              = Sources.availableSources($scope.widget.kind);
 
   function setValidity(field, error) {

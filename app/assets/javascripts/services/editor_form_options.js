@@ -29,7 +29,15 @@ app.factory("EditorFormOptions", function() {
   var sizes = [
     { value: 1, label: "1 Column" },
     { value: 2, label: "2 Column" },
-    { value: 3, label: "3 Column" }
+    { value: 3, label: "3 Column" },
+    { value: 4, label: "4 Column" }
+  ];
+
+  var vertSizes = [
+    { value: 1, label: "1 row" },
+    { value: 2, label: "2 row" },
+    { value: 3, label: "3 row" },
+    { value: 4, label: "4 row" }
   ];
 
   var graphTypes = [
@@ -47,6 +55,7 @@ app.factory("EditorFormOptions", function() {
     updateIntervals: updateIntervals,
     periods: periods,
     sizes: sizes,
+    vertSizes: vertSizes,
     graphTypes: graphTypes,
     aggregate_functions: aggregate_functions
   };
