@@ -126,9 +126,9 @@ d4.widgets.create!(
   :size_x => 2
 )
 
-d5 = Dashboard.create!(:name => 'SUSE Studio Dashboard')
+d5 = Dashboard.create!(:name => 'Chef managed servers')
 d5.widgets.create!(
-  :name     => 'Production nodes',
+  :name     => 'Production',
   :kind     => 'table',
   :size_x   => 4,
   :size_y   => 3,
