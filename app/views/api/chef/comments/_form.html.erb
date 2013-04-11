@@ -1,10 +1,15 @@
-<div.modal-header>
-  <button class="close" type="button" data-dismiss="modal">&times;</button>
-  <h3>Add comment</h3>
+<div class="modal">
+  <div class="modal-header">
+    <button class="close" type="button" data-dismiss="modal">&times;</button>
+    <h3>Add comment</h3>
+  </div>
   <%= form_for [:api, @chef_comment], :remote => true do |f| %>
-    <div class="form-inputs form-horizontal modal-body">
-      <%= f.hidden_field :node_name %>
-      <%= f.text_field :body %>
+    <div class="modal-body">
+      <%= f.error_messages %>
+      <div class="form-inputs form-horizontal modal-body">
+        <%= f.hidden_field :node_name %>
+        <%= f.text_field :body %>
+      </div>
     </div>
     <div class="modal-footer">
       <%= link_to "close", "#", :data => {:dismiss => "modal"}, :class => "btn" %>

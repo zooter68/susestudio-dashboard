@@ -20,6 +20,7 @@ gem 'faraday_middleware', '~> 0.8.8'
 gem 'multi_xml', '~> 0.5.1'
 gem 'libxml-ruby'
 gem 'nokogiri', '~> 1.5.5'
+gem 'dynamic_form'
 
 # Chef API client library
 gem 'ridley'
