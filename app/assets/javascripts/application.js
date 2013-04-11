@@ -39,4 +39,7 @@
 //= require angular-ui/bootstrap/dialog
 //= require angular-ui/bootstrap/transitions
 
+//= require dataTables/jquery.dataTables
+//= require dataTables/jquery.dataTables.bootstrap
+
 //= require_tree .
