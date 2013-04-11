@@ -2,6 +2,9 @@
 # with its default values.  The data can then be loaded with the rake db:seed
 # (or created alongside the db with db:setup).
 
+Dashboard.delete_all
+Widget.delete_all
+
 target1 = 'demo.example1'
 target2 = 'demo.example2'
 
@@ -129,24 +132,35 @@ d4.widgets.create!(
 d5 = Dashboard.create!(:name => 'Operations view')
 d5.widgets.create!(
   :name     => 'UI Server',
-  :kind     => 'number',
-  :source   => 'demo',
-  :settings => { :label => 'Reqs per min' }
+  :kind     => 'meter',
+  :source   => 'new_relic',
+  :settings => { label: 'Apdex', value_name: 'Apdex', min: 0, max: 1, step: 0.01 },
+  :update_interval => 60
 )
 d5.widgets.create!(
-  :name     => 'PostgreSQL',
+  :name     => 'UI Server (Avg response time)',
   :kind     => 'number',
-  :source   => 'demo',
-  :col      => 1,
+  :source   => 'new_relic',
+  :col      => 2,
+  :row      => 1,
+  :settings => { label: 'ms', value_name: 'average_response_time' },
+  :update_interval => 60
+)
+d5.widgets.create!(
+  :name     => 'UI Server',
+  :kind     => 'number',
+  :source   => 'new_relic',
+  :col      => 2,
   :row      => 2,
-  :settings => { :label => 'Reqs per min' }
+  :settings => { label: 'Reqs / min', value_name: 'calls_per_minute' },
+  :update_interval => 60
 )
 d5.widgets.create!(
   :name     => 'Cluster load',
   :targets  => [target1, target2].join(';'),
   :size_x   => 2,
   :size_y   => 2,
-  :col      => 2,
+  :col      => 3,
   :row      => 1,
   :source   => 'demo',
   :settings => { :graph_type => 'area' }

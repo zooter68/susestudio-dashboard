@@ -4,7 +4,8 @@ app.controller("MeterCtrl", ["$scope", function($scope) {
     size_x: 1, size_y: 2,
     update_interval: 10,
     min: 0,
-    max: 100
+    max: 100,
+    step: 1
   };
 
   if (!$scope.widget.id) {

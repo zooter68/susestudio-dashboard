@@ -3,7 +3,6 @@ app.directive("number", ["NumberModel", "SuffixFormatter", function(NumberModel,
   var linkFn = function(scope, element, attrs) {
 
     function calculatePercentage(value, previousValue) {
-      console.log("previous", previousValue, "value", value);
       return ((value - previousValue) / value) * 100;
     }
 

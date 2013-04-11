@@ -3,9 +3,15 @@
 #
 # See # https://github.com/railsjedi/rails_config for details.
 
-# The following Chef server authentication values are examples, and must be
-# overridden with real values for Chef integration to work.
+# The following values are just placeholders and must be overridden (eg. in
+# settngs.local.yml) for the corresponding features to work.
+
 chef:
   server_url:  'https://api.opscode.com'
   client_name: 'johndoe'
   client_key:  '/home/johndoe/chef-keys/johndoe.pem'
+
+newrelic:
+  account_id:     12345
+  application_id: 123456
+  api_key:        'abcdefghijklmnopqrstuvwxyz'
