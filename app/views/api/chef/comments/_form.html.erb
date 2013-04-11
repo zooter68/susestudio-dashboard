@@ -3,7 +3,7 @@
   <h3>Add comment</h3>
   <%= form_for [:api, @chef_comment], :remote => true do |f| %>
     <div class="form-inputs form-horizontal modal-body">
-      <%= f.hidden_field :node_name, value: 'node27' %>
+      <%= f.hidden_field :node_name %>
       <%= f.text_field :body %>
     </div>
     <div class="modal-footer">
