@@ -20,10 +20,10 @@ README](doc/README-original.md) for related details.
    bundle install
    ```
 
-1. Setup the PostgreSQL database and populate with sample data:
+1. Setup the PostgreSQL database and populate with seed data:
    ```
    sudo -u postgres createuser "$USER" -d
-   bundle exec rake db:setup populate
+   bundle exec rake db:setup
    ```
 
 1. Start the Rails server (at `http://localhost:3000`):
