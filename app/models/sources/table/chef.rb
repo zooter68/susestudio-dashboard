@@ -4,19 +4,35 @@ module Sources
 
       include ActionView::Helpers::NumberHelper
       include ActionView::Helpers::DateHelper
+      include ActiveSupport::Benchmarkable
+
+      def logger
+        Rails.logger
+      end
 
       def get(options = {})
         path = Rails.application.routes.url_helpers.new_api_chef_comment_path(:format => :js)
         rows = []
         count = 1
-        ::Chef.node.all.each do |node|
-          node.reload
-          rows << [ host(node), server_model(node), total_memory(node),
-                    roles(node), uptime(node), kernel(node), comments(node) ]
 
-          # FIXME It's too slow to display all nodes now, so just do the first 10
+        node_names = benchmark('Load node names') do
+          Rails.cache.fetch('Chef.node.all', :expires_in => 10.minutes) do
+            ::Chef.node.all.map(&:name)
+          end
+        end
+
+        node_names.each do |node_name|
+          node_info = benchmark("Load #{node_name}") do
+            Rails.cache.fetch("node_info:#{node_name}", :expires_in => 15.minutes) do
+              node = ::Chef.node.find(node_name)
+              [ host(node), server_model(node), total_memory(node), roles(node),
+                uptime(node), kernel(node), comments(node) ]
+            end
+          end
+          rows << node_info
+
+          # Just display the first 11 nodes for now
           break if count > 10
-
           count += 1
         end
 

@@ -34,6 +34,7 @@ module Chef
         created_at: Time.now.iso8601,
         content:    body
       })
+      Rails.cache.delete("node_info:#{node_name}.cluster.xs")
       node.save
     end
 
