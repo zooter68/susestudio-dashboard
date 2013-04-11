@@ -34,7 +34,7 @@ app.directive("table", ["$http", "TableModel", function($http, TableModel) {
   }
 
   return {
-    template: '<table cellpadding="0" cellspacing="0" border="0" class="display"></table',
+    template: '<table cellpadding="0" cellspacing="0" border="0" class="display"></table>',
     link: link
   };
 }]);
