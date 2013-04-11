@@ -20,7 +20,10 @@ app.directive("table", ["$http", "TableModel", function($http, TableModel) {
       } else {
         datatable = $(element).find("table").dataTable({
           "aaData": formatRows(data.rows),
-          "aoColumns": data.columns.map(function(c) { return {sTitle: c}; })
+          "aoColumns": data.columns.map(function(c) { return {sTitle: c}; }),
+          "bAutoWidth": false,
+          "iDisplayLength": 21,
+          "bLengthChange": false
         });
         scope.datatable = datatable;
       }
