@@ -132,5 +132,6 @@ d5.widgets.create!(
   :kind     => 'table',
   :size_x   => 4,
   :size_y   => 3,
-  :source   => 'chef'
+  :source   => 'chef',
+  :update_interval => 36000
 )
