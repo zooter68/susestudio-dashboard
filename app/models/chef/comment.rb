@@ -6,7 +6,7 @@ module Chef
 
     attr_accessor :node_name, :body
 
-    validate :not_blank
+    validates :body, :presence => {message: 'Please fill in the comment'}
 
     def initialize(attributes = {})
       unless attributes.nil?
@@ -36,14 +36,6 @@ module Chef
       })
       Rails.cache.delete("node_info:#{node_name}.cluster.xs")
       node.save
-    end
-
-    protected
-
-    def not_blank
-      if body.blank?
-        errors.add :body, 'Please fill in the comment'
-      end
     end
   end
 end
