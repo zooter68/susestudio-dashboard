@@ -9,7 +9,7 @@
 chef:
   server_url:  <%= ENV['CHEF_SERVER_URL']  || 'https://api.opscode.com' %>
   client_name: <%= ENV['CHEF_CLIENT_NAME'] || 'johndoe' %>
-  client_key:  <%= ENV['CHEF_CLIENT_KEY']  || '/home/johndoe/chef-keys/johndoe.pem' %>
+  client_key:  "<%= ENV['CHEF_CLIENT_KEY']  || '/home/johndoe/chef-keys/johndoe.pem' %>"
 
 newrelic:
   account_id:     <%= ENV['NEWRELIC_ACCOUNT_ID']     || 12345  %>
