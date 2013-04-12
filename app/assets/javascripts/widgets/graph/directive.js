@@ -21,7 +21,7 @@ app.directive("graph", ["FlotrGraphHelper", "GraphModel", function(FlotrGraphHel
     scope.init(update);
 
     // changing the widget config width should redraw flotr2 graph
-    scope.$watch("config.size_x", function(newValue, oldValue) {
+    scope.$watch("widget.size_x", function(newValue, oldValue) {
       if (newValue !== oldValue) {
         element.width(calculateWidth(scope.widget.size_x));
         scope.init(update);
