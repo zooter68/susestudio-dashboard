@@ -159,7 +159,7 @@ benchmark("Create dashboard: #{name}") do
     :source   => 'new_relic',
     :size_y   => 2,
     :settings => { label: 'Apdex', value_name: 'Apdex', min: 0, max: 1, step: 0.01 },
-    :update_interval => 30
+    :update_interval => 1.minute
   )
   d5.widgets.create!(
     :name     => 'UI Server (Avg response time)',
@@ -168,7 +168,7 @@ benchmark("Create dashboard: #{name}") do
     :col      => 2,
     :row      => 1,
     :settings => { label: 'ms', value_name: 'average_response_time' },
-    :update_interval => 30
+    :update_interval => 1.minute
   )
   d5.widgets.create!(
     :name     => 'UI Server',
@@ -177,7 +177,7 @@ benchmark("Create dashboard: #{name}") do
     :col      => 2,
     :row      => 2,
     :settings => { label: 'Reqs / min', value_name: 'calls_per_minute' },
-    :update_interval => 30
+    :update_interval => 1.minute
   )
   d5.widgets.create!(
     :name     => 'Cluster load',
@@ -195,6 +195,6 @@ benchmark("Create dashboard: #{name}") do
     :size_x   => 4,
     :size_y   => 4,
     :source   => 'chef',
-    :update_interval => 60
+    :update_interval => 10.minutes
   )
 end
