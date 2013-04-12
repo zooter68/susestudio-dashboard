@@ -150,7 +150,7 @@ benchmark("Create dashboard: #{name}") do
   )
 end
 
-name = 'Operations view'
+name = 'SUSE Studio - Ops Dashboard'
 benchmark("Create dashboard: #{name}") do
   d5 = Dashboard.create!(:name => name)
   d5.widgets.create!(
@@ -195,6 +195,7 @@ benchmark("Create dashboard: #{name}") do
     :size_x   => 4,
     :size_y   => 4,
     :source   => 'chef',
+    :settings => { displayed_rows: 21 },
     :update_interval => 10.minutes
   )
 end
