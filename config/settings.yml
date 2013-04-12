@@ -7,11 +7,11 @@
 # settngs.local.yml) for the corresponding features to work.
 
 chef:
-  server_url:  'https://api.opscode.com'
-  client_name: 'johndoe'
-  client_key:  '/home/johndoe/chef-keys/johndoe.pem'
+  server_url:  <%= ENV['CHEF_SERVER_URL']  || 'https://api.opscode.com' %>
+  client_name: <%= ENV['CHEF_CLIENT_NAME'] || 'johndoe' %>
+  client_key:  <%= ENV['CHEF_CLIENT_KEY']  || '/home/johndoe/chef-keys/johndoe.pem' %>
 
 newrelic:
-  account_id:     12345
-  application_id: 123456
-  api_key:        'abcdefghijklmnopqrstuvwxyz'
+  account_id:     <%= ENV['NEWRELIC_ACCOUNT_ID']     || 12345  %>
+  application_id: <%= ENV['NEWRELIC_APPLICATION_ID'] || 123456 %>
+  api_key:        <%= ENV['NEWRELIC_API_ID']         || 'abcdefghijklmnopqrstuvwxyz' %>
