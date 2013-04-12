@@ -22,7 +22,7 @@ app.directive("table", ["$http", "TableModel", function($http, TableModel) {
           "aaData": formatRows(data.rows),
           "aoColumns": data.columns.map(function(c) { return {sTitle: c}; }),
           "bAutoWidth": false,
-          "iDisplayLength": 21,
+          "iDisplayLength": scope.widget.displayed_rows,
           "bLengthChange": false
         });
         scope.datatable = datatable;
@@ -34,6 +34,15 @@ app.directive("table", ["$http", "TableModel", function($http, TableModel) {
     }
 
     scope.init(update);
+
+    // changing the widget config should redraw the datatable
+    scope.$watch("widget.displayed_rows", function(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        scope.datatable.fnSettings()._iDisplayLength = newValue;
+        scope.datatable.fnDraw();
+      }
+    });
+
   }
 
   return {

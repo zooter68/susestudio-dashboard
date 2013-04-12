@@ -19,6 +19,11 @@
     </select>
   </div>
 
+  <div td-field label="Displayed rows">
+    <input name="displayed_rows" ng-model="widget.displayed_rows" type="number" required>
+    </select>
+  </div>
+
   <div td-field label="Source">
     <select name="source" ng-model="widget.source" ng-options="i.value as i.label for i in sources" required>
     </select>

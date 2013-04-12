@@ -1,7 +1,8 @@
 app.controller("TableCtrl", ["$scope", "Sources", function($scope, Sources) {
 
   var defaults = {
-    size_x: 2, size_y: 1,
+    size_x: 2, size_y: 2,
+    displayed_rows: 10,
     update_interval: 10,
     range: "30-minutes"
   };
