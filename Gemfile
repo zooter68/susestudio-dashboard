@@ -4,7 +4,7 @@ gem 'rails', '3.2.13'
 
 gem 'rails_config'
 
-gem 'jquery-rails', '~> 2.2.1'
+gem 'jquery-rails', '~> 3.1.5'
 gem 'less-rails', '~> 2.2.6'
 gem 'less-rails-bootstrap', '~> 2.3.0'
 
